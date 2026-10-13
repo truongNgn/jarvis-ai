@@ -1,0 +1,11 @@
+# User-confirmed on 2026-10-13. Desktop execution remains disabled in Phase 0.
+[interaction]
+language = "en"
+default_project = "jarvis-ai"
+
+[projects.jarvis-ai]
+path = 'D:\Coder-IT\AI\jarvis-ai'
+editor = "vscode"
+editor_executable = 'C:\Users\nguye\AppData\Local\Programs\Microsoft VS Code\Code.exe'
+desktop_execution_enabled = false
+repository_status = "not initialized at Phase 0 inspection"

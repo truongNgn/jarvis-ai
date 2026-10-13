@@ -1,0 +1,55 @@
+# Phase 0 selected profile. Configuration only; no service is started by this file.
+[deployment]
+brain_python = "3.12"
+backend_environment = "wsl2-docker"
+compose_project = "jarvis-ai"
+engine = "native-ubuntu"
+# Host-side administration only. Never mount this socket in the Brain.
+administration_socket = "unix:///run/persona-docker.sock"
+model_volume = "jarvis-ai_models"
+state_volume = "jarvis-ai_state"
+language = "en"
+
+[primary]
+publisher = "Qwen/Qwen2.5-1.5B-Instruct-GGUF"
+revision = "91cad51170dc346986eccefdc2dd33a9da36ead9"
+filename = "qwen2.5-1.5b-instruct-q4_k_m.gguf"
+size_bytes = 1117320736
+sha256 = "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+license = "Apache-2.0"
+image = "ghcr.io/ggml-org/llama.cpp@sha256:b2aae63c399341c37187872d6c60b727b8f1e48b7dc15916f7aea956ac329229"
+template_sha256 = "4e9918361c284a93880606d182d64da6a9fe97cdc1f5c5a78c1c8840444246fc"
+context_tokens = 2048
+parallel_slots = 1
+threads = 4
+gpu_layers = 20
+batch_size = 256
+microbatch_size = 128
+jinja = true
+brain_base_url = "http://inference:8080/v1"
+
+[fallback]
+profile = "primary"
+gpu_layers = 0
+cloud_allowed = false
+
+[challenger]
+publisher = "Qwen/Qwen3-4B-GGUF"
+revision = "bc640142c66e1fdd12af0bd68f40445458f3869b"
+filename = "Qwen3-4B-Q4_K_M.gguf"
+size_bytes = 2497280256
+sha256 = "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5"
+license = "Apache-2.0"
+enabled = false
+validation_status = "metadata-only; not downloaded or benchmarked"
+
+[compatibility_baseline]
+# Import-tested in a disposable existing Python 3.12.15 image.
+# These are a tested starting set, not a complete transitive lock/security audit.
+fastapi = "0.115.0"
+pydantic = "2.9.2"
+langgraph = "1.0.1"
+langgraph_checkpoint = "3.0.1"
+langchain_core = "0.3.86"
+httpx = "0.27.2"
+uvicorn = "0.30.6"

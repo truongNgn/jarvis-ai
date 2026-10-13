@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task_id": "5db328c5-9ecb-4cd3-9359-8cdd15ec53f7",
+  "status": "succeeded",
+  "summary": "SYNTHETIC DEMO \u2014 no PC measurement, editor launch or Git access occurred.\nsystem_metrics: {\"cpu_percent\": 12.5, \"ram_total_gib\": 24.0, \"ram_used_gib\": 8.0, \"source\": \"fixture\"}\nproject_open: {\"editor\": \"VS Code\", \"opened\": true, \"project_id\": \"jarvis-ai\", \"source\": \"fixture\"}\ngit_branch: {\"branch\": \"feature/phase1-demo\", \"project_id\": \"jarvis-ai\", \"source\": \"fixture\"}",
+  "observations": [
+    {
+      "version": 1,
+      "call_id": "KDmTR0LS4XbjjpH88WSI3SQVsRW02NV2",
+      "tool": "system_metrics",
+      "status": "succeeded",
+      "data": {
+        "cpu_percent": 12.5,
+        "ram_used_gib": 8.0,
+        "ram_total_gib": 24.0,
+        "source": "fixture"
+      },
+      "error": null,
+      "synthetic": true
+    },
+    {
+      "version": 1,
+      "call_id": "NURFamELBNTyLc0lf1TMcaswwFtHtmWl",
+      "tool": "project_open",
+      "status": "succeeded",
+      "data": {
+        "project_id": "jarvis-ai",
+        "editor": "VS Code",
+        "opened": true,
+        "source": "fixture"
+      },
+      "error": null,
+      "synthetic": true
+    },
+    {
+      "version": 1,
+      "call_id": "0XRh7VsLnY02lFSSI9xy22PYIeZsaCvi",
+      "tool": "git_branch",
+      "status": "succeeded",
+      "data": {
+        "project_id": "jarvis-ai",
+        "branch": "feature/phase1-demo",
+        "source": "fixture"
+      },
+      "error": null,
+      "synthetic": true
+    }
+  ],
+  "events": [
+    {
+      "type": "model_reply",
+      "time": 1791851981.321,
+      "call_count": 3
+    },
+    {
+      "type": "tool_observation",
+      "time": 1791851981.322,
+      "call_id": "KDmTR0LS4XbjjpH88WSI3SQVsRW02NV2",
+      "tool": "system_metrics",
+      "status": "succeeded"
+    },
+    {
+      "type": "tool_observation",
+      "time": 1791851981.322,
+      "call_id": "NURFamELBNTyLc0lf1TMcaswwFtHtmWl",
+      "tool": "project_open",
+      "status": "succeeded"
+    },
+    {
+      "type": "tool_observation",
+      "time": 1791851981.323,
+      "call_id": "0XRh7VsLnY02lFSSI9xy22PYIeZsaCvi",
+      "tool": "git_branch",
+      "status": "succeeded"
+    },
+    {
+      "type": "model_reply",
+      "time": 1791851986.036,
+      "call_count": 0
+    }
+  ],
+  "model_turns": 2,
+  "tool_attempts": 3,
+  "synthetic": true
+}

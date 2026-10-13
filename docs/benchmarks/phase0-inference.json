@@ -1,0 +1,512 @@
+[
+  {
+    "mode": "cpu",
+    "container_id": "bf49dceb81e5c16017c2eeb3548b0c098b7884f254ab9b82d7019983dbb5df84",
+    "image": "ghcr.io/ggml-org/llama.cpp@sha256:b2aae63c399341c37187872d6c60b727b8f1e48b7dc15916f7aea956ac329229",
+    "context_tokens": 2048,
+    "gpu_layers": 0,
+    "startup_seconds": 3.562,
+    "template_sha256": "4e9918361c284a93880606d182d64da6a9fe97cdc1f5c5a78c1c8840444246fc",
+    "server_props": {
+      "default_generation_settings": {
+        "params": {
+          "seed": 4294967295,
+          "temperature": 0.800000011920929,
+          "dynatemp_range": 0.0,
+          "dynatemp_exponent": 1.0,
+          "top_k": 40,
+          "top_p": 0.949999988079071,
+          "min_p": 0.05000000074505806,
+          "top_n_sigma": -1.0,
+          "xtc_probability": 0.0,
+          "xtc_threshold": 0.10000000149011612,
+          "typical_p": 1.0,
+          "repeat_last_n": 64,
+          "repeat_penalty": 1.0,
+          "presence_penalty": 0.0,
+          "frequency_penalty": 0.0,
+          "dry_multiplier": 0.0,
+          "dry_base": 1.75,
+          "dry_allowed_length": 2,
+          "dry_penalty_last_n": 64,
+          "mirostat": 0,
+          "mirostat_tau": 5.0,
+          "mirostat_eta": 0.10000000149011612,
+          "adaptive_target": -1.0,
+          "adaptive_decay": 0.8999999761581421,
+          "max_tokens": -1,
+          "n_predict": -1,
+          "n_keep": 0,
+          "n_discard": 0,
+          "ignore_eos": false,
+          "stream": false,
+          "n_probs": 0,
+          "min_keep": 0,
+          "chat_format": "Content-only",
+          "reasoning_format": "none",
+          "reasoning_in_content": false,
+          "generation_prompt": "",
+          "samplers": [
+            "penalties",
+            "dry",
+            "top_n_sigma",
+            "top_k",
+            "typ_p",
+            "top_p",
+            "min_p",
+            "xtc",
+            "temperature"
+          ],
+          "speculative.types": "none",
+          "timings_per_token": false,
+          "post_sampling_probs": false,
+          "backend_sampling": false,
+          "lora": []
+        },
+        "n_ctx": 2048
+      },
+      "total_slots": 1,
+      "model_alias": "jarvis-probe",
+      "model_ftype": "Q4_K - Medium",
+      "model_path": "/models/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "modalities": {
+        "vision": false,
+        "video": false,
+        "audio": false
+      },
+      "media_marker": "<__media_LucfxGxC4BhWUxptrAkoDU1SM3bXpnjA__>",
+      "endpoint_slots": true,
+      "endpoint_props": false,
+      "endpoint_metrics": false,
+      "ui": true,
+      "ui_settings": {},
+      "chat_template": "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}",
+      "chat_template_caps": {
+        "supports_object_arguments": true,
+        "supports_parallel_tool_calls": true,
+        "supports_preserve_reasoning": false,
+        "supports_reasoning_effort": false,
+        "supports_string_content": true,
+        "supports_system_role": true,
+        "supports_tool_calls": true,
+        "supports_tools": true,
+        "supports_typed_content": false
+      },
+      "bos_token": "<|endoftext|>",
+      "eos_token": "<|im_end|>",
+      "build_info": "b11552-23b0202a1",
+      "is_sleeping": false,
+      "cors_proxy_enabled": false
+    },
+    "trials": [
+      {
+        "seconds": 2.484,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "cUyi0qRZO9gz0bCrEpmzQVuiumYlrxTu"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850787,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 162,
+            "total_tokens": 178,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "id": "chatcmpl-Wqi0WzkXY0XdrPYKfyPhsmVJX0XZeU36",
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 162,
+            "prompt_ms": 1886.787,
+            "prompt_per_token_ms": 11.646833333333333,
+            "prompt_per_second": 85.86024813611712,
+            "predicted_n": 16,
+            "predicted_ms": 643.655,
+            "predicted_per_token_ms": 42.910333333333334,
+            "predicted_per_second": 23.304409971180217
+          }
+        }
+      },
+      {
+        "seconds": 1.438,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "NGIX1hjfGp9uDJvwPY6F7R09ZnCZzS8i"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850788,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 165,
+            "total_tokens": 181,
+            "prompt_tokens_details": {
+              "cached_tokens": 149
+            }
+          },
+          "id": "chatcmpl-dGmlgVTxiNygyZZ8qacWnRfJwozrpHng",
+          "timings": {
+            "cache_n": 149,
+            "prompt_n": 16,
+            "prompt_ms": 238.97,
+            "prompt_per_token_ms": 14.935625,
+            "prompt_per_second": 66.9540109637193,
+            "predicted_n": 16,
+            "predicted_ms": 1226.756,
+            "predicted_per_token_ms": 81.78373333333334,
+            "predicted_per_second": 12.22737039802536
+          }
+        }
+      },
+      {
+        "seconds": 1.359,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "FngH79LVp9SRcCcPbpxfGOyTdJK0KWNO"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850790,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 163,
+            "total_tokens": 179,
+            "prompt_tokens_details": {
+              "cached_tokens": 149
+            }
+          },
+          "id": "chatcmpl-XF3Hsw3ZS0Ke8Zrzd22q10jADZO8P6pJ",
+          "timings": {
+            "cache_n": 149,
+            "prompt_n": 14,
+            "prompt_ms": 302.947,
+            "prompt_per_token_ms": 21.63907142857143,
+            "prompt_per_second": 46.21270387229449,
+            "predicted_n": 16,
+            "predicted_ms": 1068.699,
+            "predicted_per_token_ms": 71.2466,
+            "predicted_per_second": 14.03575749579629
+          }
+        }
+      }
+    ],
+    "stats": "{\"BlockIO\":\"0B / 0B\",\"CPUPerc\":\"0.00%\",\"Container\":\"jarvis-phase0-cpu\",\"ID\":\"bf49dceb81e5\",\"MemPerc\":\"18.50%\",\"MemUsage\":\"757.6MiB / 4GiB\",\"Name\":\"jarvis-phase0-cpu\",\"NetIO\":\"6.32kB / 10.6kB\",\"PIDs\":\"19\"}",
+    "logs": "warn: LLAMA_ARG_HOST environment variable is set, but will be overwritten by command line argument --host\nwarn: LLAMA_ARG_PORT environment variable is set, but will be overwritten by command line argument --port\nwarning: no usable GPU found, --gpu-layers option will be ignored\nwarning: one possible reason is that llama.cpp was compiled without GPU support\nwarning: consult docs/build.md for compilation instructions\n0.00.038.091 I srv  llama_server: initializing ...\n0.00.038.218 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)\n0.00.038.855 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)\n0.00.053.647 I srv    load_model: loading model '/models/qwen2.5-1.5b-instruct-q4_k_m.gguf'\n0.00.705.765 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden\n0.01.552.632 I cmn          init: llama threadpool init, n_threads = 4\n0.01.709.929 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 2048, kv_unified = 'false'\n0.01.717.673 I srv  llama_server: model loaded\n0.01.717.716 I srv  llama_server: listening on http://0.0.0.0:8080\n0.02.752.958 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1\n0.02.753.189 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0\n0.05.283.724 I slot print_timing: id  0 | task 0 | prompt eval time =    1886.79 ms /   162 tokens (   11.65 ms per token,    85.86 tokens per second)\n0.05.283.780 I slot print_timing: id  0 | task 0 |        eval time =     643.65 ms /    16 tokens (   42.91 ms per token,    23.30 tokens per second)\n0.05.283.781 I slot print_timing: id  0 | task 0 |       total time =    2530.44 ms /   178 tokens\n0.05.283.788 I slot print_timing: id  0 | task 0 |    graphs reused =         15\n0.05.283.877 I slot      release: id  0 | task 0 | stop processing: n_tokens = 177, truncated = 0\n0.05.298.732 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.903 (> 0.100 thold), f_keep = 0.842\n0.05.298.978 I slot launch_slot_: id  0 | task 17 | processing task, is_child = 0\n0.06.764.756 I slot print_timing: id  0 | task 17 | prompt eval time =     238.97 ms /    16 tokens (   14.94 ms per token,    66.95 tokens per second)\n0.06.764.801 I slot print_timing: id  0 | task 17 |        eval time =    1226.76 ms /    16 tokens (   81.78 ms per token,    12.23 tokens per second)\n0.06.764.801 I slot print_timing: id  0 | task 17 |       total time =    1465.73 ms /    32 tokens\n0.06.764.803 I slot print_timing: id  0 | task 17 |    graphs reused =         29\n0.06.764.856 I slot      release: id  0 | task 17 | stop processing: n_tokens = 180, truncated = 0\n0.06.773.256 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.914 (> 0.100 thold), f_keep = 0.828\n0.06.773.491 I slot launch_slot_: id  0 | task 34 | processing task, is_child = 0\n0.08.145.206 I slot print_timing: id  0 | task 34 | prompt eval time =     302.95 ms /    14 tokens (   21.64 ms per token,    46.21 tokens per second)\n0.08.145.239 I slot print_timing: id  0 | task 34 |        eval time =    1068.70 ms /    16 tokens (   71.25 ms per token,    14.04 tokens per second)\n0.08.145.240 I slot print_timing: id  0 | task 34 |       total time =    1371.65 ms /    30 tokens\n0.08.145.241 I slot print_timing: id  0 | task 34 |    graphs reused =         43\n0.08.145.284 I slot      release: id  0 | task 34 | stop processing: n_tokens = 178, truncated = 0",
+    "passed": true
+  },
+  {
+    "mode": "gpu",
+    "container_id": "4557c8f05b4a88e89b6bfddeb9594a89e421745cb94a324a139ed908e62e5f25",
+    "image": "ghcr.io/ggml-org/llama.cpp@sha256:b2aae63c399341c37187872d6c60b727b8f1e48b7dc15916f7aea956ac329229",
+    "context_tokens": 2048,
+    "gpu_layers": 20,
+    "startup_seconds": 3.156,
+    "template_sha256": "4e9918361c284a93880606d182d64da6a9fe97cdc1f5c5a78c1c8840444246fc",
+    "server_props": {
+      "default_generation_settings": {
+        "params": {
+          "seed": 4294967295,
+          "temperature": 0.800000011920929,
+          "dynatemp_range": 0.0,
+          "dynatemp_exponent": 1.0,
+          "top_k": 40,
+          "top_p": 0.949999988079071,
+          "min_p": 0.05000000074505806,
+          "top_n_sigma": -1.0,
+          "xtc_probability": 0.0,
+          "xtc_threshold": 0.10000000149011612,
+          "typical_p": 1.0,
+          "repeat_last_n": 64,
+          "repeat_penalty": 1.0,
+          "presence_penalty": 0.0,
+          "frequency_penalty": 0.0,
+          "dry_multiplier": 0.0,
+          "dry_base": 1.75,
+          "dry_allowed_length": 2,
+          "dry_penalty_last_n": 64,
+          "mirostat": 0,
+          "mirostat_tau": 5.0,
+          "mirostat_eta": 0.10000000149011612,
+          "adaptive_target": -1.0,
+          "adaptive_decay": 0.8999999761581421,
+          "max_tokens": -1,
+          "n_predict": -1,
+          "n_keep": 0,
+          "n_discard": 0,
+          "ignore_eos": false,
+          "stream": false,
+          "n_probs": 0,
+          "min_keep": 0,
+          "chat_format": "Content-only",
+          "reasoning_format": "none",
+          "reasoning_in_content": false,
+          "generation_prompt": "",
+          "samplers": [
+            "penalties",
+            "dry",
+            "top_n_sigma",
+            "top_k",
+            "typ_p",
+            "top_p",
+            "min_p",
+            "xtc",
+            "temperature"
+          ],
+          "speculative.types": "none",
+          "timings_per_token": false,
+          "post_sampling_probs": false,
+          "backend_sampling": false,
+          "lora": []
+        },
+        "n_ctx": 2048
+      },
+      "total_slots": 1,
+      "model_alias": "jarvis-probe",
+      "model_ftype": "Q4_K - Medium",
+      "model_path": "/models/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "modalities": {
+        "vision": false,
+        "video": false,
+        "audio": false
+      },
+      "media_marker": "<__media_UjeyfBqEK41Geeuf3mAdw9ZuhlHd4FaS__>",
+      "endpoint_slots": true,
+      "endpoint_props": false,
+      "endpoint_metrics": false,
+      "ui": true,
+      "ui_settings": {},
+      "chat_template": "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}",
+      "chat_template_caps": {
+        "supports_object_arguments": true,
+        "supports_parallel_tool_calls": true,
+        "supports_preserve_reasoning": false,
+        "supports_reasoning_effort": false,
+        "supports_string_content": true,
+        "supports_system_role": true,
+        "supports_tool_calls": true,
+        "supports_tools": true,
+        "supports_typed_content": false
+      },
+      "bos_token": "<|endoftext|>",
+      "eos_token": "<|im_end|>",
+      "build_info": "b11552-23b0202a1",
+      "is_sleeping": false,
+      "cors_proxy_enabled": false
+    },
+    "trials": [
+      {
+        "seconds": 0.625,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "NA9QR2TpBqncjqEEFqUvbJFr6oGl5x62"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850798,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 162,
+            "total_tokens": 178,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "id": "chatcmpl-Mgq3AvORID2ebx2KFiae287qMKdXPK0n",
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 162,
+            "prompt_ms": 247.63,
+            "prompt_per_token_ms": 1.5285802469135803,
+            "prompt_per_second": 654.2018333804467,
+            "predicted_n": 16,
+            "predicted_ms": 360.549,
+            "predicted_per_token_ms": 24.0366,
+            "predicted_per_second": 41.60322175349259
+          }
+        }
+      },
+      {
+        "seconds": 0.422,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "S2k0VOt8IZrJLfYz1RJufikdGSpADOOI"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850798,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 165,
+            "total_tokens": 181,
+            "prompt_tokens_details": {
+              "cached_tokens": 149
+            }
+          },
+          "id": "chatcmpl-R8s7RfxywX1u27nJqYxHeCSHroOTGunr",
+          "timings": {
+            "cache_n": 149,
+            "prompt_n": 16,
+            "prompt_ms": 90.914,
+            "prompt_per_token_ms": 5.682125,
+            "prompt_per_second": 175.99049651318828,
+            "predicted_n": 16,
+            "predicted_ms": 330.978,
+            "predicted_per_token_ms": 22.0652,
+            "predicted_per_second": 45.32023276471548
+          }
+        }
+      },
+      {
+        "seconds": 0.453,
+        "valid_call": true,
+        "response": {
+          "choices": [
+            {
+              "finish_reason": "tool_calls",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "function": {
+                      "name": "system_metrics",
+                      "arguments": "{}"
+                    },
+                    "id": "OElOBpgq3dYSYaQiRRXtV4yb68qtJ0OW"
+                  }
+                ]
+              }
+            }
+          ],
+          "created": 1791850799,
+          "model": "jarvis-probe",
+          "system_fingerprint": "b11552-23b0202a1",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 16,
+            "prompt_tokens": 163,
+            "total_tokens": 179,
+            "prompt_tokens_details": {
+              "cached_tokens": 149
+            }
+          },
+          "id": "chatcmpl-j34B5Mj4scdIgethNJcL4s6Uk5eOXHyN",
+          "timings": {
+            "cache_n": 149,
+            "prompt_n": 14,
+            "prompt_ms": 101.049,
+            "prompt_per_token_ms": 7.217785714285715,
+            "prompt_per_second": 138.54664568674602,
+            "predicted_n": 16,
+            "predicted_ms": 337.03,
+            "predicted_per_token_ms": 22.468666666666664,
+            "predicted_per_second": 44.5064237604961
+          }
+        }
+      }
+    ],
+    "stats": "{\"BlockIO\":\"15.2MB / 65.5kB\",\"CPUPerc\":\"0.16%\",\"Container\":\"jarvis-phase0-gpu\",\"ID\":\"4557c8f05b4a\",\"MemPerc\":\"9.22%\",\"MemUsage\":\"377.6MiB / 4GiB\",\"Name\":\"jarvis-phase0-gpu\",\"NetIO\":\"5.51kB / 10kB\",\"PIDs\":\"23\"}",
+    "logs": "warn: LLAMA_ARG_HOST environment variable is set, but will be overwritten by command line argument --host\nwarn: LLAMA_ARG_PORT environment variable is set, but will be overwritten by command line argument --port\n0.00.221.583 I srv  llama_server: initializing ...\n0.00.221.618 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)\n0.00.221.948 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)\n0.00.224.008 I srv    load_model: loading model '/models/qwen2.5-1.5b-instruct-q4_k_m.gguf'\n0.00.981.799 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden\n0.01.288.293 I cmn          init: llama threadpool init, n_threads = 4\n0.01.473.371 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 2048, kv_unified = 'false'\n0.01.477.833 I srv  llama_server: model loaded\n0.01.477.872 I srv  llama_server: listening on http://0.0.0.0:8080\n0.01.583.838 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1\n0.01.584.188 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0\n0.02.192.561 I slot print_timing: id  0 | task 0 | prompt eval time =     247.63 ms /   162 tokens (    1.53 ms per token,   654.20 tokens per second)\n0.02.192.592 I slot print_timing: id  0 | task 0 |        eval time =     360.55 ms /    16 tokens (   24.04 ms per token,    41.60 tokens per second)\n0.02.192.592 I slot print_timing: id  0 | task 0 |       total time =     608.18 ms /   178 tokens\n0.02.192.597 I slot print_timing: id  0 | task 0 |    graphs reused =         15\n0.02.192.645 I slot      release: id  0 | task 0 | stop processing: n_tokens = 177, truncated = 0\n0.02.199.511 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.903 (> 0.100 thold), f_keep = 0.842\n0.02.199.667 I slot launch_slot_: id  0 | task 17 | processing task, is_child = 0\n0.02.621.595 I slot print_timing: id  0 | task 17 | prompt eval time =      90.91 ms /    16 tokens (    5.68 ms per token,   175.99 tokens per second)\n0.02.621.621 I slot print_timing: id  0 | task 17 |        eval time =     330.98 ms /    16 tokens (   22.07 ms per token,    45.32 tokens per second)\n0.02.621.621 I slot print_timing: id  0 | task 17 |       total time =     421.89 ms /    32 tokens\n0.02.621.622 I slot print_timing: id  0 | task 17 |    graphs reused =         29\n0.02.621.662 I slot      release: id  0 | task 17 | stop processing: n_tokens = 180, truncated = 0\n0.02.636.889 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.914 (> 0.100 thold), f_keep = 0.828\n0.02.637.045 I slot launch_slot_: id  0 | task 34 | processing task, is_child = 0\n0.03.075.166 I slot print_timing: id  0 | task 34 | prompt eval time =     101.05 ms /    14 tokens (    7.22 ms per token,   138.55 tokens per second)\n0.03.075.201 I slot print_timing: id  0 | task 34 |        eval time =     337.03 ms /    16 tokens (   22.47 ms per token,    44.51 tokens per second)\n0.03.075.202 I slot print_timing: id  0 | task 34 |       total time =     438.08 ms /    30 tokens\n0.03.075.203 I slot print_timing: id  0 | task 34 |    graphs reused =         43\n0.03.075.251 I slot      release: id  0 | task 34 | stop processing: n_tokens = 178, truncated = 0",
+    "passed": true
+  }
+]

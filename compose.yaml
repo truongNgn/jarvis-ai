@@ -1,0 +1,57 @@
+name: jarvis-ai
+services:
+  inference:
+    image: ghcr.io/ggml-org/llama.cpp@sha256:b2aae63c399341c37187872d6c60b727b8f1e48b7dc15916f7aea956ac329229
+    gpus: all
+    command: ["--model", "/models/qwen2.5-1.5b-instruct-q4_k_m.gguf", "--alias", "jarvis-qwen",
+              "--host", "0.0.0.0", "--port", "8080", "--ctx-size", "2048", "--parallel", "1",
+              "--threads", "4", "--batch-size", "256", "--ubatch-size", "128",
+              "--n-gpu-layers", "${JARVIS_GPU_LAYERS:-20}", "--jinja"]
+    volumes: ["models:/models:ro"]
+    networks: [agent]
+    mem_limit: 4g
+    cpus: 4
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: "no"
+  brain:
+    image: jarvis-ai-brain:phase1
+    build:
+      context: .
+      dockerfile: Dockerfile.brain
+      target: runtime
+    environment:
+      JARVIS_LLM_URL: http://inference:8080/v1
+    depends_on: [inference]
+    networks: [agent]
+    mem_limit: 512m
+    cpus: 2
+    read_only: true
+    tmpfs: ["/tmp:size=16m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    stdin_open: true
+    profiles: [cli]
+  tests:
+    image: jarvis-ai-tests:phase1
+    build:
+      context: .
+      dockerfile: Dockerfile.brain
+      target: test
+    environment:
+      JARVIS_LLM_URL: http://inference:8080/v1
+    networks: [agent]
+    mem_limit: 512m
+    cpus: 2
+    read_only: true
+    tmpfs: ["/tmp:size=32m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    profiles: [test]
+networks:
+  agent:
+    internal: true
+volumes:
+  models:
+    external: true
+    name: jarvis-ai_models

@@ -1,0 +1,4 @@
+"""Artifact identities validated during Phase 0."""
+MODEL_SHA256 = "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+TEMPLATE_SHA256 = "4e9918361c284a93880606d182d64da6a9fe97cdc1f5c5a78c1c8840444246fc"
+INFERENCE_IMAGE = "ghcr.io/ggml-org/llama.cpp@sha256:b2aae63c399341c37187872d6c60b727b8f1e48b7dc15916f7aea956ac329229"

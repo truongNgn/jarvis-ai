@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jarvis-ai"
+version = "0.1.0"
+description = "Local JARVIS Phase 1 synthetic-tool agent"
+requires-python = ">=3.12"
+dependencies = ["httpx==0.28.1", "pydantic==2.14.1", "langgraph==1.2.15"]
+
+[project.scripts]
+jarvis = "jarvis.ui.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+testpaths = ["tests"]
