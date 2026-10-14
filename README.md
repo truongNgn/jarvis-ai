@@ -1,6 +1,6 @@
-# JARVIS AI — Phase 1
+# JARVIS AI — Phases 1–2
 
-A local LangGraph task agent running in Docker on WSL2. **Every tool is currently synthetic.** It does not measure your PC, open Windows applications, inspect your real Git branch, or execute a shell. The model chooses structured tools and sees their observations; execution permission and completion reporting are enforced by application code.
+A local LangGraph task agent running in Docker on WSL2, with a separate native Windows capability runtime. **Phase 1's natural-language CLI still uses synthetic tools.** Phase 2 adds explicit authenticated native tool calls; connecting them to natural-language multi-step tasks is Phase 3. No unrestricted shell is exposed.
 
 ## Implemented
 
@@ -33,7 +33,7 @@ The default CLI task requires all three demo capabilities. This is an explicit t
 
 `--json` prints observations/events, and Ctrl+C cancels the task. `--fail-tool project_open` injects a fixture failure to demonstrate partial completion. A result exit code of 0 means all required synthetic goals were observed successfully; 2 means partial/failure/cancellation/unavailable. The final displayed facts are built from validated results, so the model cannot claim an editor was opened by merely saying it was.
 
-The native WSL engine may stop with the Ubuntu session on machines configured for idle shutdown. Keep an Ubuntu terminal active while using the stack if necessary. Startup health checks wait within a bounded deadline, and missing inference fails clearly.
+The Compose wrapper maintains a tagged JARVIS WSL keepalive helper when starting services or running containers, preventing idle shutdown of the native engine. `scripts/stop-phase2.ps1` releases that helper when stopping the desktop stack. Startup checks have bounded deadlines.
 
 ## CPU fallback
 
@@ -67,4 +67,49 @@ Locks are specific to Python 3.12/Linux amd64, pin all resolved versions, and cu
 ./scripts/wsl-compose.ps1 stop inference
 ```
 
-This preserves the verified model volume. Do not run global prune or remove unrelated containers. The implementation report is in `docs/benchmarks/phase1.md`. Phase 2's Windows runtime and Phase 3's integrated desktop tasks remain future work.
+This preserves the verified model volume. Do not run global prune or remove unrelated containers. The Phase 1 implementation report is in `docs/benchmarks/phase1.md`.
+
+## Phase 2: native Windows tools
+
+The runtime needs only the existing Windows Python 3.10+ standard library. Backend FastAPI/Uvicorn libraries are installed in Docker; there is no host venv or new host library installation. Native Win32 monitoring/window APIs and ctypes NVML avoid shipping psutil/pywinauto at this milestone. Rich UIA remains a future capability.
+
+Initialize once, build the broker image, and start its loopback-only endpoint:
+
+```powershell
+./scripts/windows-runtime.ps1 -Action init
+./scripts/wsl-compose.ps1 --profile desktop build broker
+./scripts/wsl-compose.ps1 --profile desktop up -d broker
+./scripts/windows-runtime.ps1 -Action serve
+```
+
+The last command runs the runtime in the signed-in Windows session. It polls authenticated leased calls from the Docker broker; Windows exposes no execution listener. Credentials are generated randomly, DPAPI-protected under your private LocalAppData, and provisioned into a dedicated read-only Docker secrets volume. They are not environment variables or repository files. The runtime's SQLite journal and broker's own SQLite volume preserve call IDs and results.
+
+From a second PowerShell terminal:
+
+```powershell
+./scripts/windows-runtime.ps1 -Action call -Tool system.metrics
+./scripts/windows-runtime.ps1 -Action call -Tool git.branch -Arguments '{"project_id":"jarvis-ai"}'
+./scripts/windows-runtime.ps1 -Action call -Tool window.list -Arguments '{"app_id":"vscode"}'
+```
+
+Read-only tools are enabled by default. To explicitly enable reversible desktop operations, start the runtime with `-AllowDesktop`, then call:
+
+```powershell
+./scripts/windows-runtime.ps1 -Action serve -AllowDesktop
+./scripts/windows-runtime.ps1 -Action call -Tool project.open -Arguments '{"project_id":"jarvis-ai"}'
+```
+
+Edit `config/runtime.example.json` for a different trusted installation path before running it. Windows references returned by `window.list` are signed, expire after 30 seconds, and bind HWND/PID/process creation time; `window.activate` accepts only such references. Foreground activation may be refused by Windows and returns `foreground_denied`, rather than bypassing that restriction. `project.open` reports `launch_requested` and `verification=unverified`; window titles alone do not prove the exact workspace opened.
+
+Each administrative call is explicit user authorization, separate from model output. The broker signs a bounded request; the native runtime independently rechecks tool, arguments, local scope, grant, version, deadline and signature. A duplicate call ID returns its recorded result, altered arguments are rejected, and unfinished journal entries return `unknown` without replaying a side effect.
+
+Native tests and optional desktop smoke:
+
+```powershell
+$env:PYTHONPATH = Join-Path (Get-Location) 'src'
+python -m unittest discover -s tests -p test_runtime_native.py
+python scripts/phase2_validate.py               # metrics, Git, scoped windows and denials
+python scripts/phase2_validate.py --desktop     # additionally requests launch and activation
+```
+
+Use `scripts/stop-phase2.ps1` to stop recorded JARVIS helpers/broker; Ctrl+C in the runtime terminal is the normal foreground stop. Force-stopping during a mutation can leave an unknown outcome; the durable journal prevents blind replay. The implementation report and known verification limits are in `docs/benchmarks/phase2.md`. Natural-language integration remains Phase 3.

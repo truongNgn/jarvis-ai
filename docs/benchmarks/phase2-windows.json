@@ -1,0 +1,100 @@
+{
+  "synthetic": false,
+  "checks": [
+    {
+      "tool": "system.metrics",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.703,
+      "data": {
+        "cpu_percent": 26.09,
+        "disk_free_bytes": 21383426048,
+        "disk_total_bytes": 102062968832,
+        "gpu": {
+          "available": true,
+          "total_bytes": 4294967296,
+          "used_bytes": 2150137856
+        },
+        "ram_total_bytes": 25372315648,
+        "ram_used_bytes": 23459192832,
+        "sample_seconds": 0.11,
+        "sample_time": 1791907032.3713183
+      }
+    },
+    {
+      "tool": "git.branch",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.672,
+      "data": {
+        "branch": "main",
+        "commit": "c0d44d83e85360eb4815c728d7edadee3c0fbf80",
+        "project_id": "jarvis-ai",
+        "state": "branch"
+      }
+    },
+    {
+      "tool": "git.branch",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.453,
+      "data": {
+        "branch": "main",
+        "commit": "c0d44d83e85360eb4815c728d7edadee3c0fbf80",
+        "project_id": "jarvis-ai",
+        "state": "branch"
+      }
+    },
+    {
+      "tool": "git.branch",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.016,
+      "data": {
+        "branch": "main",
+        "commit": "c0d44d83e85360eb4815c728d7edadee3c0fbf80",
+        "project_id": "jarvis-ai",
+        "state": "branch"
+      }
+    },
+    {
+      "tool": "project.open",
+      "status": "succeeded",
+      "error": null,
+      "verification": "unverified",
+      "seconds": 1.062,
+      "data": {
+        "launch_requested": true,
+        "matching_window_count": 1,
+        "project_id": "jarvis-ai"
+      }
+    },
+    {
+      "tool": "window.list",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.438,
+      "data": {
+        "window_count": 1
+      }
+    },
+    {
+      "tool": "window.activate",
+      "status": "succeeded",
+      "error": null,
+      "verification": "verified",
+      "seconds": 0.437,
+      "data": {
+        "foreground": true
+      }
+    }
+  ],
+  "duplicate_result_identical": true,
+  "unsafe_requests_rejected": 3,
+  "core_passed": true
+}

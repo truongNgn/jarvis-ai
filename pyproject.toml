@@ -7,7 +7,8 @@ name = "jarvis-ai"
 version = "0.1.0"
 description = "Local JARVIS Phase 1 synthetic-tool agent"
 requires-python = ">=3.12"
-dependencies = ["httpx==0.28.1", "pydantic==2.14.1", "langgraph==1.2.15"]
+dependencies = ["httpx==0.28.1", "pydantic==2.14.1", "langgraph==1.2.15",
+                "fastapi==0.143.0", "uvicorn==0.54.0"]
 
 [project.scripts]
 jarvis = "jarvis.ui.cli:main"

@@ -48,10 +48,36 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     profiles: [test]
+  broker:
+    image: jarvis-ai-brain:phase1
+    build:
+      context: .
+      dockerfile: Dockerfile.brain
+      target: runtime
+    entrypoint: ["python", "-m", "jarvis.runtime.server"]
+    ports: ["127.0.0.1:18765:18765"]
+    volumes: ["bridge_secrets:/secrets:ro", "bridge_state:/state"]
+    tmpfs: ["/tmp:size=16m"]
+    networks: [agent, bridge]
+    mem_limit: 256m
+    cpus: 1
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: "no"
+    profiles: [desktop]
 networks:
   agent:
     internal: true
+  bridge:
+    internal: false
 volumes:
   models:
     external: true
     name: jarvis-ai_models
+  bridge_secrets:
+    external: true
+    name: jarvis-ai_bridge_secrets
+  bridge_state:
+    external: true
+    name: jarvis-ai_bridge_state

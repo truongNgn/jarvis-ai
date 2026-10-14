@@ -1,8 +1,8 @@
 # JARVIS Full Hybrid Implementation Plan
 
-Planning date: 2026-10-12 (Asia/Saigon). Updated: 2026-10-13. Status: Phases 0 and 1 implemented and validated; Phase 2 has not started. See docs/architecture/decisions.md and docs/benchmarks/baseline.md for evidence and remaining gates.
+Planning date: 2026-10-12 (Asia/Saigon). Updated: 2026-10-14. Status: Phases 0–2 implemented and validated; Phase 3 has not started. See docs/architecture/decisions.md and docs/benchmarks/baseline.md for evidence and remaining gates.
 
-This is the standalone JARVIS project at `D:\Coder-IT\AI\jarvis-ai`. The initial planning request authorized this document only. On 2026-10-13 the user authorized updating it and executing Phase 0. Research scripts, configuration examples and Phase 0 evidence are now authorized; On 2026-10-13 the user subsequently authorized Phase 1 implementation; Phase 2 and later phases remain future work. No reference files are to be changed. Suggested performance thresholds remain engineering targets; measured Phase 0 results are explicitly linked.
+This is the standalone JARVIS project at `D:\Coder-IT\AI\jarvis-ai`. The initial planning request authorized this document only. On 2026-10-13 the user authorized updating it and executing Phase 0. The user subsequently authorized Phase 1 and Phase 2 implementation; Phase 3 and later phases remain future work. No reference files are to be changed. Suggested performance thresholds remain engineering targets; measured Phase 0 results are explicitly linked.
 
 ## 1. Executive Summary
 
@@ -293,7 +293,7 @@ Restricted scripts mean reviewed, versioned operation recipes with fixed executa
 
 ## 12. Tool Registry and Permission Model
 
-Registry registration rejects duplicate names/versions and requires argument schema, result schema, risk, policy scope, timeout, output limit and verifier. Runtime exposes only registered tools. Pydantic validation happens on both sides; authorization uses trusted session/grant state rather than model-supplied identity.
+Registry registration rejects duplicate names/versions and requires argument schema, result schema, risk, policy scope, timeout, output limit and verifier. Runtime exposes only registered tools. Pydantic validates Docker-side submission envelopes. For Phase 2, both ends enforce the same closed primitive argument/result schemas without a native Pydantic dependency; unsupported external tool schemas cannot be registered. Authorization uses trusted signed grants and local scope rather than model-supplied identity. More complex native schemas must be versioned and validated explicitly before future capabilities are enabled.
 
 | Level | Examples | Required authority |
 |---|---|---|
@@ -495,19 +495,19 @@ Complexity: S = narrow adapter or isolated change; M = several coordinated modul
 
 - **Classification/objective:** MVP-critical; enable narrowly scoped native capabilities.
 - **Dependencies:** P1 contracts/policy; configured project and executable.
-- **Components/new files:** `runtime/server.py`, `client.py`, `auth.py`, `dispatcher.py`, `workers.py`, minimal `journal.py`; `runtime/tools/metrics.py`, `projects.py`, `git.py`, `windows.py`; `security/paths.py`, `credentials.py`; `config/policy.example.toml`, `projects.example.toml`; runtime integration/Windows tests.
+- **Components/new files:** `runtime/server.py`, `client.py`, `auth.py`, `dispatcher.py`, `workers.py`, minimal `journal.py`; `runtime/tools/metrics.py`, `projects.py`, `git.py`, `windows.py`; `security/paths.py`, `credentials.py`; `runtime/protocol.py`, `config/runtime.example.json`; runtime integration/Windows tests. The native configuration includes its local allowlist; no unused policy file was scaffolded.
 - **Reuse:** transport/typed error patterns only; native tools are new.
 - **Tasks:**
-  - [ ] P2.1 Implement the authenticated outbound Runtime-to-Brain leased HTTP bridge, Windows localhost reachability and capability/schema handshake; recheck cancellation and grants at dispatch.
-  - [ ] P2.2 Add metrics, project launch and read-only Git branch tools with output validation.
-  - [ ] P2.3 Add window list/activate, per-call journal and duplicate-ID checks.
-  - [ ] P2.4 Recheck scope, paths, deadlines and cancellation inside Runtime.
-  - [ ] P2.5 Verify actual editor/workspace evidence and unavailable-GPU fallback.
+  - [x] P2.1 Implement the authenticated outbound Runtime-to-Brain leased HTTP bridge, Windows localhost reachability and capability/schema handshake; recheck cancellation and grants at dispatch.
+  - [x] P2.2 Add metrics, project launch and read-only Git branch tools with output validation.
+  - [x] P2.3 Add window list/activate, per-call journal and duplicate-ID checks.
+  - [x] P2.4 Recheck scope, paths, deadlines and cancellation inside Runtime.
+  - [x] P2.5 Verify actual editor/workspace evidence and unavailable-GPU fallback.
 - **Interfaces/challenges:** RuntimeClient, ToolCall/Result; VS Code process forwarding, WDDM counter limits, path handling.
 - **Tests:** credential/Origin rejection, expired call, duplicate call, invalid project, detached HEAD, launch failure, inaccessible metrics and stale window reference.
 - **Acceptance:** each allowed tool works independently and forbidden tool/path never executes.
 - **DoD/boundary:** native tool contract suite passes; no filesystem writes, arbitrary scripts or GUI typing tools.
-- **Complexity/deliverable:** L; capability-limited Windows executor.
+- **Complexity/deliverable:** L; capability-limited Windows executor. Completed 2026-10-14; see `docs/benchmarks/phase2.md` for tests, real Windows calls and explicit workspace/foreground verification limits.
 
 ### Phase 3 — Multi-Step Desktop Automation
 
@@ -668,12 +668,12 @@ Paths below are relative to the proposed JARVIS root. This is the coding-agent w
 | `src/jarvis/runtime/auth.py` | 2 | Local credential validation and origin/host rules; unauthorized request tests |
 | `src/jarvis/security/credentials.py` | 2/8 | OS-protected credential references; never serialize secrets into task state |
 | `src/jarvis/security/paths.py` | 2 | Canonical roots and device/reparse restrictions; malicious path matrix |
-| `src/jarvis/runtime/server.py` | 2 | Capability/call/status/cancel HTTP routes; transport contract tests |
-| `src/jarvis/runtime/client.py` | 2 | Typed dispatch/poll/cancel and reconnect; disconnected-response tests |
+| `src/jarvis/runtime/server.py` | 2 | Docker FastAPI broker: role-authenticated submission, registration, leases, status, cancel and results; contract tests |
+| `src/jarvis/runtime/client.py` | 2 | Native outbound polling/registration, explicit admin CLI and bounded startup; fail closed on transport loss |
 | `src/jarvis/runtime/dispatcher.py` | 2 | Revalidation, policy, budgets and verifier invocation; bypass attempts |
 | `src/jarvis/runtime/workers.py` | 2/4 | Bounded blocking workers and owned-child lifecycle; timeout cleanup tests |
 | `src/jarvis/runtime/journal.py` | 2/4 | Call ID/hash dedup, durable intent/results, reconciliation; crash-window tests |
-| `src/jarvis/runtime/tools/metrics.py` | 2 | psutil/NVML samples with explicit unavailable fields; fallback tests |
+| `src/jarvis/runtime/tools/metrics.py` | 2 | Native Win32 CPU/RAM/disk and ctypes NVML samples; no host libraries; explicit unavailable counters |
 | `src/jarvis/runtime/tools/projects.py` | 2 | Alias-to-editor launch and evidence; wrong-project/forwarded-process tests |
 | `src/jarvis/runtime/tools/git.py` | 2/5 | Fixed read-only Git operations; detached/unborn/non-repo/worktree tests |
 | `src/jarvis/runtime/tools/windows.py` | 2 | Scoped window identities/activation; stale handle and focus tests |
@@ -846,4 +846,4 @@ M1 completion checklist (completed 2026-10-13; see Phase 1 report):
 - [x] Selected model runs locally within measured memory limits; manifest records build/template/artifact versions.
 - [x] No reference repository changes, runtime coupling, desktop writes, cloud dependency or unrestricted executor.
 
-Stop at M1 and report evidence. Phase 2 is a separate approved milestone. Phases 0 and 1 are now authorized and validated; Phase 2 remains future work.
+Stop at M1 and report evidence. Phase 2 is a separate approved milestone. Phases 0–2 are now authorized and validated; Phase 3 remains future work.

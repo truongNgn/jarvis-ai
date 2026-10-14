@@ -5,6 +5,7 @@ __pycache__/
 .venv/
 venv/
 .cache/
+.local/
 .credentials/
 secrets/
 credentials.json
@@ -14,6 +15,7 @@ token.pickle
 *.key
 *.p12
 *.pfx
+*.dpapi
 id_rsa*
 id_ed25519*
 *.log

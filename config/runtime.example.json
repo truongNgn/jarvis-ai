@@ -1,0 +1,6 @@
+{
+  "projects": {"jarvis-ai": "D:\\Coder-IT\\AI\\jarvis-ai"},
+  "editor_executable": "%LOCALAPPDATA%\\Programs\\Microsoft VS Code\\Code.exe",
+  "git_executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+  "allowed_tools": ["system.metrics", "git.branch", "window.list"]
+}
