@@ -14,7 +14,7 @@ class Settings(StrictModel):
     max_turns: int = Field(default=12, ge=1, le=12)
     task_timeout: float = Field(default=120.0, gt=0, le=120)
     model_timeout: float = Field(default=30.0, gt=0, le=60)
-    tool_timeout: float = Field(default=2.0, gt=0, le=5)
+    tool_timeout: float = Field(default=2.0, gt=0, le=30)
     max_context_chars: int = Field(default=6500, ge=2000, le=6500)
 
     @model_validator(mode="after")

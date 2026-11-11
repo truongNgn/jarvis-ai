@@ -22,18 +22,27 @@ requested actions are done, give a short answer. Do not print textual tool calls
 
 
 class TaskAgent:
-    def __init__(self, adapter: ModelAdapter, registry: ToolRegistry, settings: Settings):
-        self.adapter, self.registry, self.settings = adapter, registry, settings
+    def __init__(self, adapter: ModelAdapter, registry: ToolRegistry, settings: Settings, checkpointer: None):
+        self.adapter, self.registry, self.settings,checkpointer = adapter, registry, settings, checkpointer
 
     async def run(self, request: TaskRequest, grant: Grant,
-                  cancel: asyncio.Event | None = None) -> TaskOutcome:
+                  cancel: asyncio.Event | None = None, task_id: str | None = None,
+                  on_event=None) -> TaskOutcome:
         cancel = cancel or asyncio.Event()
-        initial: TaskState = {"task_id": str(uuid.uuid4()),
-            "messages": [{"role": "system", "content": PROMPT},
+        initial: TaskState = {"task_id": task_id or str(uuid.uuid4()),
+            "messages": [{"role": "system", "content": getattr(self.registry, "prompt", PROMPT)},
                          {"role": "user", "content": request.text}],
             "pending": [], "observations": [], "events": [], "model_turns": 0,
             "tool_attempts": 0, "repairs": 0, "terminal": "", "seen_ids": {}}
         latest = dict(initial)
+        delivered = 0
+
+        def publish(events):
+            nonlocal delivered
+            if on_event:
+                for item in events[delivered:]:
+                    on_event(item)
+                delivered = len(events)
 
         async def model(state: TaskState):
             if cancel.is_set():
@@ -92,20 +101,25 @@ class TaskAgent:
                     else:
                         result = ToolResult.model_validate(previous["result"])
                 else:
+                    events.append(event("tool_started", call_id=call.id, tool=call.name))
+                    publish(events)
                     try:
                         async with asyncio.timeout(self.settings.tool_timeout):
                             result = await self.registry.execute(call, grant)
                     except TimeoutError:
-                        result = ToolResult(call_id=call.id, tool=call.name, status="failed", error="tool_timeout")
+                        result = ToolResult(call_id=call.id, tool=call.name, status="failed", error="tool_timeout",
+                                            synthetic=getattr(self.registry, "synthetic", True), verification="unverified")
                     except asyncio.CancelledError:
                         raise
                     except Exception:
-                        result = ToolResult(call_id=call.id, tool=call.name, status="failed", error="tool_failure")
+                        result = ToolResult(call_id=call.id, tool=call.name, status="failed", error="tool_failure",
+                                            synthetic=getattr(self.registry, "synthetic", True), verification="unverified")
                     seen[call.id] = {"call": raw, "result": result.model_dump()}
                 observations.append(result.model_dump())
                 messages.append({"role": "tool", "tool_call_id": call.id,
                                  "content": result.model_dump_json()})
                 events.append(event("tool_observation", call_id=call.id, tool=call.name, status=result.status))
+                publish(events)
                 if terminal:
                     break
             return {"messages": messages, "observations": observations, "events": events,
@@ -118,12 +132,13 @@ class TaskAgent:
         builder.add_edge(START, "model")
         builder.add_conditional_edges("model", lambda s: END if s["terminal"] else "execute")
         builder.add_conditional_edges("execute", lambda s: END if s["terminal"] else "model")
-        graph = builder.compile()
-
+        graph = builder.compile(self.checkpointer)
+     
         async def drive():
             nonlocal latest
             async for state in graph.astream(initial, stream_mode="values", config={"recursion_limit": 40}):
                 latest = state
+                publish(state["events"])
 
         driver = asyncio.create_task(drive())
         stopper = asyncio.create_task(cancel.wait())
@@ -144,7 +159,7 @@ class TaskAgent:
                 if not task.done():
                     task.cancel()
             await asyncio.gather(driver, stopper, return_exceptions=True)
-        return self.finalize(latest, request)
+        return getattr(self.registry, "finalize", self.finalize)(latest, request)
 
     @staticmethod
     def finalize(state: TaskState, request: TaskRequest) -> TaskOutcome:

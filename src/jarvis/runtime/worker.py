@@ -21,7 +21,8 @@ def run(payload):
         data = windows.activate(config, key, args["window_ref"])
     else:
         raise Rejected("unknown_tool")
-    output = result(call, "succeeded", data, verification="unverified" if tool == "project.open" else "verified")
+    verified = tool != "project.open" or "workspace_evidence" in data
+    output = result(call, "succeeded", data, verification="verified" if verified else "unverified")
     return validate_result(output, call)
 
 

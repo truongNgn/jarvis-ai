@@ -1,8 +1,8 @@
 # JARVIS Full Hybrid Implementation Plan
 
-Planning date: 2026-10-12 (Asia/Saigon). Updated: 2026-10-14. Status: Phases 0–2 implemented and validated; Phase 3 has not started. See docs/architecture/decisions.md and docs/benchmarks/baseline.md for evidence and remaining gates.
+Planning date: 2026-10-12 (Asia/Saigon). Updated: 2026-10-14. Status: Phases 0–2 implemented and validated; Phase 3 implementation is present with native live acceptance pending workspace verifier activation. See docs/benchmarks/phase3.md for evidence and the remaining gate.
 
-This is the standalone JARVIS project at `D:\Coder-IT\AI\jarvis-ai`. The initial planning request authorized this document only. On 2026-10-13 the user authorized updating it and executing Phase 0. The user subsequently authorized Phase 1 and Phase 2 implementation; Phase 3 and later phases remain future work. No reference files are to be changed. Suggested performance thresholds remain engineering targets; measured Phase 0 results are explicitly linked.
+This is the standalone JARVIS project at `D:\Coder-IT\AI\jarvis-ai`. The initial planning request authorized this document only. On 2026-10-13 the user authorized updating it and executing Phase 0. The user subsequently authorized Phase 1, Phase 2 and Phase 3 implementation; Phase 4 and later remain future work. No reference files are to be changed. Suggested performance thresholds remain engineering targets; measured results are explicitly linked.
 
 ## 1. Executive Summary
 
@@ -516,10 +516,11 @@ Complexity: S = narrow adapter or isolated change; M = several coordinated modul
 - **Components/new files:** `brain/service.py`, `brain/api.py`, `brain/verification.py`, `ui/events.py`, `storage/memory.py` (confirmed preferences/aliases only); `tests/e2e/test_mvp.py`, `evals/cases/mvp.jsonl`.
 - **Reuse:** gateway separation/cancellation pattern; no reference conversation graph.
 - **Tasks:**
-  - [ ] P3.1 Wire real tool schemas into the model and Runtime observations back into graph messages.
-  - [ ] P3.2 Track requested outcomes and require evidence for metrics, project opening and branch.
-  - [ ] P3.3 Add project disambiguation, task event display and partial-failure summaries.
-  - [ ] P3.4 Exercise varied phrasing, changed order and missing tools; enforce serialized UI actions.
+  - [x] P3.1 Wire real tool schemas into the model and Runtime observations back into graph messages.
+  - [x] P3.2 Track requested outcomes and require evidence for metrics, project opening and branch.
+  - [x] P3.3 Add project disambiguation, task event display and partial-failure summaries.
+  - [x] P3.4 Exercise varied phrasing, changed order and missing tools; enforce serialized UI actions.
+  - [ ] Live acceptance: obtain current VS Code workspace API receipts and complete all three goals. Native smoke currently preserves editor launches as unverified; see the Phase 3 report.
 - **Interfaces/challenges:** TaskRequest/Event, goal verifier; intent ambiguity and plausible-but-false success.
 - **Tests:** normal scenario, editor absent, wrong/non-repo project, Runtime disconnect and model stops early.
 - **Acceptance:** genuine structured calls complete all three goals with current observations; failures remain visible.
@@ -846,4 +847,4 @@ M1 completion checklist (completed 2026-10-13; see Phase 1 report):
 - [x] Selected model runs locally within measured memory limits; manifest records build/template/artifact versions.
 - [x] No reference repository changes, runtime coupling, desktop writes, cloud dependency or unrestricted executor.
 
-Stop at M1 and report evidence. Phase 2 is a separate approved milestone. Phases 0–2 are now authorized and validated; Phase 3 remains future work.
+Stop at M1 and report evidence. Phase 2 is a separate approved milestone. Phases 0–3 are now authorized; Phases 0–2 are validated, and Phase 3's full native acceptance remains pending. Phase 4 requires separate authorization.

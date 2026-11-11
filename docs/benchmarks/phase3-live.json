@@ -1,0 +1,1719 @@
+{
+  "synthetic": false,
+  "corpus": "mvp development smoke, not held-out acceptance",
+  "passed": 0,
+  "total": 10,
+  "cases": [
+    {
+      "id": "native-01",
+      "seconds": 13.656,
+      "task_id": "b7c552d4-fd67-4c01-85e0-af7dd20df8b8",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986991.257,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986991.258,
+          "call_id": "1CGu6xNqSv7bCYLe6BgpXagSzY2XrENk",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986992.394,
+          "call_id": "1CGu6xNqSv7bCYLe6BgpXagSzY2XrENk",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986992.394,
+          "call_id": "qxXusTywbunPGfYQLepF0Rb9wpENDsbY",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791987000.567,
+          "call_id": "qxXusTywbunPGfYQLepF0Rb9wpENDsbY",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791987000.567,
+          "call_id": "sMOlVN1QiPOywNLjvJJVwrmozF0Jswli",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791987001.179,
+          "call_id": "sMOlVN1QiPOywNLjvJJVwrmozF0Jswli",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791987004.457,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "b7c552d4-fd67-4c01-85e0-af7dd20df8b8",
+        "status": "partial",
+        "summary": "system_metrics: {\"cpu_percent\": 10.13, \"disk_free_bytes\": 21382471680, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 3154481152}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 19837091840, \"sample_seconds\": 0.109, \"sample_time\": 1791986993.9740248} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "1CGu6xNqSv7bCYLe6BgpXagSzY2XrENk",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 10.13,
+              "disk_free_bytes": 21382471680,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 3154481152
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 19837091840,
+              "sample_seconds": 0.109,
+              "sample_time": 1791986993.9740248
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "qxXusTywbunPGfYQLepF0Rb9wpENDsbY",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "sMOlVN1QiPOywNLjvJJVwrmozF0Jswli",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986991.257,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986991.258,
+            "call_id": "1CGu6xNqSv7bCYLe6BgpXagSzY2XrENk",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986992.394,
+            "call_id": "1CGu6xNqSv7bCYLe6BgpXagSzY2XrENk",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986992.394,
+            "call_id": "qxXusTywbunPGfYQLepF0Rb9wpENDsbY",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791987000.567,
+            "call_id": "qxXusTywbunPGfYQLepF0Rb9wpENDsbY",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791987000.567,
+            "call_id": "sMOlVN1QiPOywNLjvJJVwrmozF0Jswli",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791987001.179,
+            "call_id": "sMOlVN1QiPOywNLjvJJVwrmozF0Jswli",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791987004.457,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-02",
+      "seconds": 12.953,
+      "task_id": "4abcdc5d-aa32-4391-ae30-fb842a4ab049",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986855.531,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986855.532,
+          "call_id": "haWIPJgDynkSmtJX31vjpUEfpFDhwRNq",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986856.469,
+          "call_id": "haWIPJgDynkSmtJX31vjpUEfpFDhwRNq",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986856.469,
+          "call_id": "7Stq1qySqO1f8BXSGYNTd9mL4U9SsIB2",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986857.094,
+          "call_id": "7Stq1qySqO1f8BXSGYNTd9mL4U9SsIB2",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986857.094,
+          "call_id": "to0BkvkV6uBJsfQnynAojpDF0IJogAPs",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986865.391,
+          "call_id": "to0BkvkV6uBJsfQnynAojpDF0IJogAPs",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986867.973,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "4abcdc5d-aa32-4391-ae30-fb842a4ab049",
+        "status": "partial",
+        "summary": "git_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nsystem_metrics: {\"cpu_percent\": 28.57, \"disk_free_bytes\": 21382529024, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 2538082304}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20300484608, \"sample_seconds\": 0.11, \"sample_time\": 1791986857.5675807} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "haWIPJgDynkSmtJX31vjpUEfpFDhwRNq",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "7Stq1qySqO1f8BXSGYNTd9mL4U9SsIB2",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 28.57,
+              "disk_free_bytes": 21382529024,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 2538082304
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20300484608,
+              "sample_seconds": 0.11,
+              "sample_time": 1791986857.5675807
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "to0BkvkV6uBJsfQnynAojpDF0IJogAPs",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986855.531,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986855.532,
+            "call_id": "haWIPJgDynkSmtJX31vjpUEfpFDhwRNq",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986856.469,
+            "call_id": "haWIPJgDynkSmtJX31vjpUEfpFDhwRNq",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986856.469,
+            "call_id": "7Stq1qySqO1f8BXSGYNTd9mL4U9SsIB2",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986857.094,
+            "call_id": "7Stq1qySqO1f8BXSGYNTd9mL4U9SsIB2",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986857.094,
+            "call_id": "to0BkvkV6uBJsfQnynAojpDF0IJogAPs",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986865.391,
+            "call_id": "to0BkvkV6uBJsfQnynAojpDF0IJogAPs",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986867.973,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-03",
+      "seconds": 13.375,
+      "task_id": "621efef5-e5a3-4787-84c1-0b92a9da46a4",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986869.342,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986869.344,
+          "call_id": "IrLD8Nm0HxBkUHTLfc9qK4awo98hddOI",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986875.391,
+          "call_id": "IrLD8Nm0HxBkUHTLfc9qK4awo98hddOI",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986875.391,
+          "call_id": "qq8BeMuxpdImKS0VZ5ovTRelXQvdn47E",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986876.004,
+          "call_id": "qq8BeMuxpdImKS0VZ5ovTRelXQvdn47E",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986876.004,
+          "call_id": "hK10MLEDjiTxBIlAqyWssnB4K7pqEKK6",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986876.515,
+          "call_id": "hK10MLEDjiTxBIlAqyWssnB4K7pqEKK6",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986879.597,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "621efef5-e5a3-4787-84c1-0b92a9da46a4",
+        "status": "partial",
+        "summary": "project_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\nsystem_metrics: {\"cpu_percent\": 12.5, \"disk_free_bytes\": 21382524928, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 2617421824}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20170321920, \"sample_seconds\": 0.093, \"sample_time\": 1791986877.347332} (verified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "IrLD8Nm0HxBkUHTLfc9qK4awo98hddOI",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "qq8BeMuxpdImKS0VZ5ovTRelXQvdn47E",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 12.5,
+              "disk_free_bytes": 21382524928,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 2617421824
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20170321920,
+              "sample_seconds": 0.093,
+              "sample_time": 1791986877.347332
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "hK10MLEDjiTxBIlAqyWssnB4K7pqEKK6",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986869.342,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986869.344,
+            "call_id": "IrLD8Nm0HxBkUHTLfc9qK4awo98hddOI",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986875.391,
+            "call_id": "IrLD8Nm0HxBkUHTLfc9qK4awo98hddOI",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986875.391,
+            "call_id": "qq8BeMuxpdImKS0VZ5ovTRelXQvdn47E",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986876.004,
+            "call_id": "qq8BeMuxpdImKS0VZ5ovTRelXQvdn47E",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986876.004,
+            "call_id": "hK10MLEDjiTxBIlAqyWssnB4K7pqEKK6",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986876.515,
+            "call_id": "hK10MLEDjiTxBIlAqyWssnB4K7pqEKK6",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986879.597,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-04",
+      "seconds": 14.016,
+      "task_id": "8aaa7af7-b7a2-47d0-8219-9fd04a448fc5",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986881.097,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986881.098,
+          "call_id": "71R95WQ9y6FFZidrNUTO8KjtvUGoL64s",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986882.546,
+          "call_id": "71R95WQ9y6FFZidrNUTO8KjtvUGoL64s",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986882.546,
+          "call_id": "nSGpqjjr3KnEuNTQnNp0OsIjio3bCB72",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986890.821,
+          "call_id": "nSGpqjjr3KnEuNTQnNp0OsIjio3bCB72",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986890.821,
+          "call_id": "R2fgUYIkq6uebTTeRyTIYIZkU3NrB5Qk",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986891.433,
+          "call_id": "R2fgUYIkq6uebTTeRyTIYIZkU3NrB5Qk",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986894.893,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "8aaa7af7-b7a2-47d0-8219-9fd04a448fc5",
+        "status": "partial",
+        "summary": "system_metrics: {\"cpu_percent\": 19.23, \"disk_free_bytes\": 21382516736, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 2718511104}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20305883136, \"sample_seconds\": 0.094, \"sample_time\": 1791986883.5639074} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "71R95WQ9y6FFZidrNUTO8KjtvUGoL64s",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 19.23,
+              "disk_free_bytes": 21382516736,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 2718511104
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20305883136,
+              "sample_seconds": 0.094,
+              "sample_time": 1791986883.5639074
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "nSGpqjjr3KnEuNTQnNp0OsIjio3bCB72",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "R2fgUYIkq6uebTTeRyTIYIZkU3NrB5Qk",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986881.097,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986881.098,
+            "call_id": "71R95WQ9y6FFZidrNUTO8KjtvUGoL64s",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986882.546,
+            "call_id": "71R95WQ9y6FFZidrNUTO8KjtvUGoL64s",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986882.546,
+            "call_id": "nSGpqjjr3KnEuNTQnNp0OsIjio3bCB72",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986890.821,
+            "call_id": "nSGpqjjr3KnEuNTQnNp0OsIjio3bCB72",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986890.821,
+            "call_id": "R2fgUYIkq6uebTTeRyTIYIZkU3NrB5Qk",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986891.433,
+            "call_id": "R2fgUYIkq6uebTTeRyTIYIZkU3NrB5Qk",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986894.893,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-05",
+      "seconds": 13.657,
+      "task_id": "1fc5bc29-4eec-4db0-aac6-3fd8e1f1845c",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986896.095,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986896.096,
+          "call_id": "YojThFTF9KXD2hcP0kYKPfyAsPXklHIw",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986897.54,
+          "call_id": "YojThFTF9KXD2hcP0kYKPfyAsPXklHIw",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986897.54,
+          "call_id": "VvGcIBBgSsTRbmycgsEzIdUu9SSEIZbp",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986903.56,
+          "call_id": "VvGcIBBgSsTRbmycgsEzIdUu9SSEIZbp",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986903.56,
+          "call_id": "1jDd2VM46CHipi00vmEth0q7og27IBUm",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986904.189,
+          "call_id": "1jDd2VM46CHipi00vmEth0q7og27IBUm",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986907.409,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "1fc5bc29-4eec-4db0-aac6-3fd8e1f1845c",
+        "status": "partial",
+        "summary": "system_metrics: {\"cpu_percent\": 16.92, \"disk_free_bytes\": 21382508544, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 2855301120}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20419178496, \"sample_seconds\": 0.094, \"sample_time\": 1791986897.3598397} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "YojThFTF9KXD2hcP0kYKPfyAsPXklHIw",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 16.92,
+              "disk_free_bytes": 21382508544,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 2855301120
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20419178496,
+              "sample_seconds": 0.094,
+              "sample_time": 1791986897.3598397
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "VvGcIBBgSsTRbmycgsEzIdUu9SSEIZbp",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "1jDd2VM46CHipi00vmEth0q7og27IBUm",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986896.095,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986896.096,
+            "call_id": "YojThFTF9KXD2hcP0kYKPfyAsPXklHIw",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986897.54,
+            "call_id": "YojThFTF9KXD2hcP0kYKPfyAsPXklHIw",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986897.54,
+            "call_id": "VvGcIBBgSsTRbmycgsEzIdUu9SSEIZbp",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986903.56,
+            "call_id": "VvGcIBBgSsTRbmycgsEzIdUu9SSEIZbp",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986903.56,
+            "call_id": "1jDd2VM46CHipi00vmEth0q7og27IBUm",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986904.189,
+            "call_id": "1jDd2VM46CHipi00vmEth0q7og27IBUm",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986907.409,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-06",
+      "seconds": 12.75,
+      "task_id": "8d4eb523-82c0-4367-be87-a018d7aa35e2",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986908.745,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986908.747,
+          "call_id": "RsbusBq0h0n6s7AezXZQ2Awl7D67p59x",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986916.79,
+          "call_id": "RsbusBq0h0n6s7AezXZQ2Awl7D67p59x",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986916.79,
+          "call_id": "nCcYrcKVi4TK5pFf5ISbg84rifRBFPsj",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986917.401,
+          "call_id": "nCcYrcKVi4TK5pFf5ISbg84rifRBFPsj",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986917.401,
+          "call_id": "00xSnTWF0su1VSeLpBfTSGIwTZq9v5sk",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986917.917,
+          "call_id": "00xSnTWF0su1VSeLpBfTSGIwTZq9v5sk",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986921.104,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "8d4eb523-82c0-4367-be87-a018d7aa35e2",
+        "status": "partial",
+        "summary": "project_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nsystem_metrics: {\"cpu_percent\": 11.59, \"disk_free_bytes\": 21382504448, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 2750926848}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20277886976, \"sample_seconds\": 0.094, \"sample_time\": 1791986918.3560755} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "RsbusBq0h0n6s7AezXZQ2Awl7D67p59x",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "nCcYrcKVi4TK5pFf5ISbg84rifRBFPsj",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "00xSnTWF0su1VSeLpBfTSGIwTZq9v5sk",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 11.59,
+              "disk_free_bytes": 21382504448,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 2750926848
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20277886976,
+              "sample_seconds": 0.094,
+              "sample_time": 1791986918.3560755
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986908.745,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986908.747,
+            "call_id": "RsbusBq0h0n6s7AezXZQ2Awl7D67p59x",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986916.79,
+            "call_id": "RsbusBq0h0n6s7AezXZQ2Awl7D67p59x",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986916.79,
+            "call_id": "nCcYrcKVi4TK5pFf5ISbg84rifRBFPsj",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986917.401,
+            "call_id": "nCcYrcKVi4TK5pFf5ISbg84rifRBFPsj",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986917.401,
+            "call_id": "00xSnTWF0su1VSeLpBfTSGIwTZq9v5sk",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986917.917,
+            "call_id": "00xSnTWF0su1VSeLpBfTSGIwTZq9v5sk",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986921.104,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-07",
+      "seconds": 14.485,
+      "task_id": "5cde15f9-b933-43d4-b923-6515c52c1b65",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986922.605,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986922.606,
+          "call_id": "UxU03kUiqGajCEJVzGZnv5uvXZyErmxB",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986929.075,
+          "call_id": "UxU03kUiqGajCEJVzGZnv5uvXZyErmxB",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986929.075,
+          "call_id": "FYAjlv60wUHnHy8EHxsjBWPgm7CdjRs7",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986929.691,
+          "call_id": "FYAjlv60wUHnHy8EHxsjBWPgm7CdjRs7",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986929.691,
+          "call_id": "bAwBqjAgj1zpoN5N3PZi14VcJiaqlt9j",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986930.311,
+          "call_id": "bAwBqjAgj1zpoN5N3PZi14VcJiaqlt9j",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986934.37,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "5cde15f9-b933-43d4-b923-6515c52c1b65",
+        "status": "partial",
+        "summary": "project_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nsystem_metrics: {\"cpu_percent\": 38.16, \"disk_free_bytes\": 21382496256, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 3172585472}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 19962908672, \"sample_seconds\": 0.094, \"sample_time\": 1791986932.0354662} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "UxU03kUiqGajCEJVzGZnv5uvXZyErmxB",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "FYAjlv60wUHnHy8EHxsjBWPgm7CdjRs7",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "bAwBqjAgj1zpoN5N3PZi14VcJiaqlt9j",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 38.16,
+              "disk_free_bytes": 21382496256,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 3172585472
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 19962908672,
+              "sample_seconds": 0.094,
+              "sample_time": 1791986932.0354662
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986922.605,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986922.606,
+            "call_id": "UxU03kUiqGajCEJVzGZnv5uvXZyErmxB",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986929.075,
+            "call_id": "UxU03kUiqGajCEJVzGZnv5uvXZyErmxB",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986929.075,
+            "call_id": "FYAjlv60wUHnHy8EHxsjBWPgm7CdjRs7",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986929.691,
+            "call_id": "FYAjlv60wUHnHy8EHxsjBWPgm7CdjRs7",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986929.691,
+            "call_id": "bAwBqjAgj1zpoN5N3PZi14VcJiaqlt9j",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986930.311,
+            "call_id": "bAwBqjAgj1zpoN5N3PZi14VcJiaqlt9j",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986934.37,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-08",
+      "seconds": 12.453,
+      "task_id": "95f48328-b279-45a5-bf8e-50f4c3ba40b3",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986935.778,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986935.78,
+          "call_id": "2WXCXQdBRRSp7ZlYjAagoxWfaqP8nn7e",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986943.854,
+          "call_id": "2WXCXQdBRRSp7ZlYjAagoxWfaqP8nn7e",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986943.854,
+          "call_id": "mYVNs0dLdc07yjg484WZCgWLSNzRJLms",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986944.464,
+          "call_id": "mYVNs0dLdc07yjg484WZCgWLSNzRJLms",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986944.464,
+          "call_id": "OH8mkoZz8TaJQv2CC3kKb4NP7UFTyN4V",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986945.08,
+          "call_id": "OH8mkoZz8TaJQv2CC3kKb4NP7UFTyN4V",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986947.894,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "95f48328-b279-45a5-bf8e-50f4c3ba40b3",
+        "status": "partial",
+        "summary": "project_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nsystem_metrics: {\"cpu_percent\": 48.61, \"disk_free_bytes\": 21382492160, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 3107098624}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20161314816, \"sample_seconds\": 0.11, \"sample_time\": 1791986945.7738545} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "2WXCXQdBRRSp7ZlYjAagoxWfaqP8nn7e",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "mYVNs0dLdc07yjg484WZCgWLSNzRJLms",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "OH8mkoZz8TaJQv2CC3kKb4NP7UFTyN4V",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 48.61,
+              "disk_free_bytes": 21382492160,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 3107098624
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20161314816,
+              "sample_seconds": 0.11,
+              "sample_time": 1791986945.7738545
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986935.778,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986935.78,
+            "call_id": "2WXCXQdBRRSp7ZlYjAagoxWfaqP8nn7e",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986943.854,
+            "call_id": "2WXCXQdBRRSp7ZlYjAagoxWfaqP8nn7e",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986943.854,
+            "call_id": "mYVNs0dLdc07yjg484WZCgWLSNzRJLms",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986944.464,
+            "call_id": "mYVNs0dLdc07yjg484WZCgWLSNzRJLms",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986944.464,
+            "call_id": "OH8mkoZz8TaJQv2CC3kKb4NP7UFTyN4V",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986945.08,
+            "call_id": "OH8mkoZz8TaJQv2CC3kKb4NP7UFTyN4V",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986947.894,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-09",
+      "seconds": 13.578,
+      "task_id": "76a2de5c-1114-4fb5-bc3f-fe2738d6e26e",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986949.12,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986949.121,
+          "call_id": "iVtqL5slXhYDxPuUKF9DffTXCg0mrgwA",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986950.041,
+          "call_id": "iVtqL5slXhYDxPuUKF9DffTXCg0mrgwA",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986950.041,
+          "call_id": "qdP6L373QfyMB7B8fic0mvI4DjWkfFRv",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986958.114,
+          "call_id": "qdP6L373QfyMB7B8fic0mvI4DjWkfFRv",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986958.114,
+          "call_id": "nTcZGe4MuCcHZ1QUgOrgeMqpN1AY56Vf",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986958.739,
+          "call_id": "nTcZGe4MuCcHZ1QUgOrgeMqpN1AY56Vf",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986960.114,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "76a2de5c-1114-4fb5-bc3f-fe2738d6e26e",
+        "status": "partial",
+        "summary": "system_metrics: {\"cpu_percent\": 29.63, \"disk_free_bytes\": 21382483968, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 3090501632}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 20105048064, \"sample_seconds\": 0.094, \"sample_time\": 1791986950.390935} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "iVtqL5slXhYDxPuUKF9DffTXCg0mrgwA",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 29.63,
+              "disk_free_bytes": 21382483968,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 3090501632
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 20105048064,
+              "sample_seconds": 0.094,
+              "sample_time": 1791986950.390935
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "qdP6L373QfyMB7B8fic0mvI4DjWkfFRv",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          },
+          {
+            "version": 1,
+            "call_id": "nTcZGe4MuCcHZ1QUgOrgeMqpN1AY56Vf",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986949.12,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986949.121,
+            "call_id": "iVtqL5slXhYDxPuUKF9DffTXCg0mrgwA",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986950.041,
+            "call_id": "iVtqL5slXhYDxPuUKF9DffTXCg0mrgwA",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986950.041,
+            "call_id": "qdP6L373QfyMB7B8fic0mvI4DjWkfFRv",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986958.114,
+            "call_id": "qdP6L373QfyMB7B8fic0mvI4DjWkfFRv",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986958.114,
+            "call_id": "nTcZGe4MuCcHZ1QUgOrgeMqpN1AY56Vf",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986958.739,
+            "call_id": "nTcZGe4MuCcHZ1QUgOrgeMqpN1AY56Vf",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986960.114,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    },
+    {
+      "id": "native-10",
+      "seconds": 13.75,
+      "task_id": "d3eaec9f-706b-4b71-9301-f0ecad11750e",
+      "status": "partial",
+      "events": [
+        {
+          "type": "model_reply",
+          "time": 1791986961.611,
+          "call_count": 3
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986961.612,
+          "call_id": "KGL9ioTlFqi9tZR9waB5gTpZBT0j5Kpe",
+          "tool": "system_metrics"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986962.666,
+          "call_id": "KGL9ioTlFqi9tZR9waB5gTpZBT0j5Kpe",
+          "tool": "system_metrics",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986962.666,
+          "call_id": "Kl4NhQ0hbHfpX2s9CpozLfPWetDIgTqM",
+          "tool": "git_branch"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986963.287,
+          "call_id": "Kl4NhQ0hbHfpX2s9CpozLfPWetDIgTqM",
+          "tool": "git_branch",
+          "status": "succeeded"
+        },
+        {
+          "type": "tool_started",
+          "time": 1791986963.287,
+          "call_id": "s1KbYzYIbauPIWqvgJ6FZwMZRNZCnzi8",
+          "tool": "project_open"
+        },
+        {
+          "type": "tool_observation",
+          "time": 1791986971.388,
+          "call_id": "s1KbYzYIbauPIWqvgJ6FZwMZRNZCnzi8",
+          "tool": "project_open",
+          "status": "succeeded"
+        },
+        {
+          "type": "model_reply",
+          "time": 1791986974.857,
+          "call_count": 0
+        }
+      ],
+      "outcome": {
+        "version": 1,
+        "task_id": "d3eaec9f-706b-4b71-9301-f0ecad11750e",
+        "status": "partial",
+        "summary": "system_metrics: {\"cpu_percent\": 23.08, \"disk_free_bytes\": 21382479872, \"disk_total_bytes\": 102062968832, \"gpu\": {\"available\": true, \"total_bytes\": 4294967296, \"used_bytes\": 3252228096}, \"ram_total_bytes\": 25372315648, \"ram_used_bytes\": 19981692928, \"sample_seconds\": 0.11, \"sample_time\": 1791986964.1216822} (verified)\ngit_branch: {\"branch\": \"main\", \"commit\": \"74536268f2d42e1dce7a2f7efc6bf8e71533ad08\", \"project_id\": \"jarvis-ai\", \"state\": \"branch\"} (verified)\nproject_open: {\"launch_requested\": true, \"matching_window_count\": 2, \"project_id\": \"jarvis-ai\"} (unverified)\nUnfulfilled goals: project_open",
+        "observations": [
+          {
+            "version": 1,
+            "call_id": "KGL9ioTlFqi9tZR9waB5gTpZBT0j5Kpe",
+            "tool": "system_metrics",
+            "status": "succeeded",
+            "data": {
+              "cpu_percent": 23.08,
+              "disk_free_bytes": 21382479872,
+              "disk_total_bytes": 102062968832,
+              "gpu": {
+                "available": true,
+                "total_bytes": 4294967296,
+                "used_bytes": 3252228096
+              },
+              "ram_total_bytes": 25372315648,
+              "ram_used_bytes": 19981692928,
+              "sample_seconds": 0.11,
+              "sample_time": 1791986964.1216822
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "Kl4NhQ0hbHfpX2s9CpozLfPWetDIgTqM",
+            "tool": "git_branch",
+            "status": "succeeded",
+            "data": {
+              "branch": "main",
+              "commit": "74536268f2d42e1dce7a2f7efc6bf8e71533ad08",
+              "project_id": "jarvis-ai",
+              "state": "branch"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "verified"
+          },
+          {
+            "version": 1,
+            "call_id": "s1KbYzYIbauPIWqvgJ6FZwMZRNZCnzi8",
+            "tool": "project_open",
+            "status": "succeeded",
+            "data": {
+              "launch_requested": true,
+              "matching_window_count": 2,
+              "project_id": "jarvis-ai"
+            },
+            "error": null,
+            "synthetic": false,
+            "verification": "unverified"
+          }
+        ],
+        "events": [
+          {
+            "type": "model_reply",
+            "time": 1791986961.611,
+            "call_count": 3
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986961.612,
+            "call_id": "KGL9ioTlFqi9tZR9waB5gTpZBT0j5Kpe",
+            "tool": "system_metrics"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986962.666,
+            "call_id": "KGL9ioTlFqi9tZR9waB5gTpZBT0j5Kpe",
+            "tool": "system_metrics",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986962.666,
+            "call_id": "Kl4NhQ0hbHfpX2s9CpozLfPWetDIgTqM",
+            "tool": "git_branch"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986963.287,
+            "call_id": "Kl4NhQ0hbHfpX2s9CpozLfPWetDIgTqM",
+            "tool": "git_branch",
+            "status": "succeeded"
+          },
+          {
+            "type": "tool_started",
+            "time": 1791986963.287,
+            "call_id": "s1KbYzYIbauPIWqvgJ6FZwMZRNZCnzi8",
+            "tool": "project_open"
+          },
+          {
+            "type": "tool_observation",
+            "time": 1791986971.388,
+            "call_id": "s1KbYzYIbauPIWqvgJ6FZwMZRNZCnzi8",
+            "tool": "project_open",
+            "status": "succeeded"
+          },
+          {
+            "type": "model_reply",
+            "time": 1791986974.857,
+            "call_count": 0
+          }
+        ],
+        "model_turns": 2,
+        "tool_attempts": 3,
+        "synthetic": false
+      }
+    }
+  ],
+  "validation_note": "Case 1 rerun after Runtime registration; other cases retained from the preceding sequential run."
+}

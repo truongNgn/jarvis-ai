@@ -1,4 +1,4 @@
-"""Docker-only Phase 2 capability broker; no model-directed actions yet."""
+"""Authenticated native capability broker and Phase 3 task API."""
 import json
 import secrets
 import sqlite3
@@ -124,10 +124,12 @@ class Broker:
         return {"accepted": True}
 
 
-def create_app(broker):
+def create_app(broker, service=None):
     @asynccontextmanager
     async def lifespan(app):
         yield
+        if service:
+            await service.close()
         broker.db.close()
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 
@@ -197,6 +199,9 @@ def create_app(broker):
     async def cancel(ident: str):
         return broker.cancel(ident)
 
+    if service:
+        from jarvis.brain.api import install
+        install(app, service)
     return app
 
 
@@ -205,7 +210,11 @@ def main():
     secrets_file = Path("/secrets/bridge.json")
     Path("/state").mkdir(exist_ok=True)
     broker = Broker("/state/bridge.sqlite", json.loads(secrets_file.read_text()))
-    uvicorn.run(create_app(broker), host="0.0.0.0", port=18765, access_log=False,
+    from jarvis.brain.service import TaskService
+    from jarvis.config import Settings
+    from jarvis.llm.llama_cpp import LlamaCppAdapter
+    service = TaskService(broker, LlamaCppAdapter(Settings.environment()))
+    uvicorn.run(create_app(broker, service), host="0.0.0.0", port=18765, access_log=False,
                 timeout_keep_alive=2, limit_concurrency=16)
 
 

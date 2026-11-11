@@ -55,6 +55,8 @@ services:
       dockerfile: Dockerfile.brain
       target: runtime
     entrypoint: ["python", "-m", "jarvis.runtime.server"]
+    environment:
+      JARVIS_LLM_URL: http://inference:8080/v1
     ports: ["127.0.0.1:18765:18765"]
     volumes: ["bridge_secrets:/secrets:ro", "bridge_state:/state"]
     tmpfs: ["/tmp:size=16m"]

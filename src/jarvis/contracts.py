@@ -27,16 +27,17 @@ class ToolResult(StrictModel):
     version: Literal[1] = 1
     call_id: str
     tool: str
-    status: Literal["succeeded", "failed", "denied", "invalid", "cancelled"]
+    status: Literal["succeeded", "failed", "denied", "invalid", "cancelled", "unknown"]
     data: dict[str, Any] = Field(default_factory=dict)
     error: str | None = None
-    synthetic: Literal[True] = True
+    synthetic: bool = True
+    verification: Literal["verified", "unverified"] = "verified"
 
 
 class TaskRequest(StrictModel):
     version: Literal[1] = 1
     text: str = Field(min_length=1, max_length=1500)
-    project_id: Literal["jarvis-ai"] = "jarvis-ai"
+    project_id: str | None = "jarvis-ai"
     required_tools: list[Literal["system_metrics", "project_open", "git_branch"]] = Field(
         default_factory=lambda: ["system_metrics", "project_open", "git_branch"], max_length=3)
 
@@ -50,4 +51,4 @@ class TaskOutcome(StrictModel):
     events: list[dict[str, Any]]
     model_turns: int
     tool_attempts: int
-    synthetic: Literal[True] = True
+    synthetic: bool = True

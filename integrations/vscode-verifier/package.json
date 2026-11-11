@@ -1,0 +1,12 @@
+{
+  "name": "workspace-verifier",
+  "publisher": "jarvis-ai",
+  "version": "0.1.4",
+  "displayName": "JARVIS Workspace Verifier",
+  "description": "Local, request-bound verification of the configured JARVIS workspace.",
+  "engines": {"vscode": "^1.90.0"},
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": {"untrustedWorkspaces": {"supported": true}},
+  "license": "UNLICENSED"
+}

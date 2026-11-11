@@ -109,6 +109,12 @@ def main():
     call.add_argument("--call-id")
     cancel = sub.add_parser("cancel")
     cancel.add_argument("call_id")
+    task = sub.add_parser("task", help="Run a model-directed native task")
+    task.add_argument("text")
+    task.add_argument("--project", default=None)
+    task.add_argument("--expect", nargs="+", choices=["system_metrics", "project_open", "git_branch"],
+                      default=["system_metrics", "project_open", "git_branch"])
+    task.add_argument("--json", action="store_true")
     args = parser.parse_args()
     credentials = load_credentials()
     if args.command == "serve":
@@ -120,6 +126,32 @@ def main():
             release_runtime_lock(handle)
         return
     client = Client(args.broker, credentials["admin_token"])
+    if args.command == "task":
+        from jarvis.ui.events import display
+        submitted = client.request("/v1/tasks", {"text": args.text, "project_id": args.project,
+                                                 "required_tools": args.expect})
+        if "task_id" not in submitted:
+            print(canonical(submitted))
+            raise SystemExit(2)
+        ident, cursor = submitted["task_id"], 0
+        until = time.monotonic()+150
+        try:
+            while time.monotonic() < until:
+                state = client.request("/v1/tasks/" + ident)
+                if not args.json:
+                    for item in state["events"][cursor:]:
+                        print(display(item), flush=True)
+                cursor = len(state["events"])
+                if state["status"] not in {"queued", "running"}:
+                    print(canonical(state) if args.json else (state["outcome"] or {}).get("summary", state["status"]))
+                    raise SystemExit(0 if state["status"] == "succeeded" else 2)
+                time.sleep(0.2)
+        except (KeyboardInterrupt, urllib.error.URLError, http.client.HTTPException, OSError):
+            client.request("/v1/tasks/" + ident + "/cancel", {})
+            raise
+        client.request("/v1/tasks/" + ident + "/cancel", {})
+        print(canonical({"task_id": ident, "status": "unknown", "error": "wait_expired_stop_requested"}))
+        raise SystemExit(2)
     if args.command == "cancel":
         print(canonical(client.request("/v1/calls/" + args.call_id + "/cancel", {})))
         return

@@ -1,6 +1,6 @@
-# JARVIS AI — Phases 1–2
+# JARVIS AI — Phase 3 candidate
 
-A local LangGraph task agent running in Docker on WSL2, with a separate native Windows capability runtime. **Phase 1's natural-language CLI still uses synthetic tools.** Phase 2 adds explicit authenticated native tool calls; connecting them to natural-language multi-step tasks is Phase 3. No unrestricted shell is exposed.
+A local LangGraph task agent running in Docker on WSL2, with a separate native Windows capability runtime. Phase 3 connects native tools to authenticated natural-language tasks. The original container CLI remains an explicitly synthetic demo. No unrestricted shell is exposed. Full native completion is gated on a current VS Code workspace receipt; see `docs/benchmarks/phase3.md` for validation and remaining limits.
 
 ## Implemented
 
@@ -112,4 +112,41 @@ python scripts/phase2_validate.py               # metrics, Git, scoped windows a
 python scripts/phase2_validate.py --desktop     # additionally requests launch and activation
 ```
 
-Use `scripts/stop-phase2.ps1` to stop recorded JARVIS helpers/broker; Ctrl+C in the runtime terminal is the normal foreground stop. Force-stopping during a mutation can leave an unknown outcome; the durable journal prevents blind replay. The implementation report and known verification limits are in `docs/benchmarks/phase2.md`. Natural-language integration remains Phase 3.
+Use `scripts/stop-phase2.ps1` to stop recorded JARVIS helpers/broker; Ctrl+C in the runtime terminal is the normal foreground stop. Force-stopping during a mutation can leave an unknown outcome; the durable journal prevents blind replay. The Phase 2 report is in `docs/benchmarks/phase2.md`.
+
+## Native natural-language tasks
+
+Install the small first-party workspace verifier from the reviewed source in `integrations/vscode-verifier`. It uses VS Code's workspace API and writes a nonce-bound, expiring local receipt; it has no shell, network, credential or folder-opening capability. Reload VS Code after installing or updating it so the new version activates. Installation requires no npm packages or downloads.
+
+```powershell
+./scripts/install-vscode-verifier.ps1
+./scripts/wsl-compose.ps1 --profile desktop build broker
+./scripts/wsl-compose.ps1 --profile desktop up -d inference broker
+./scripts/windows-runtime.ps1 -Action serve -AllowDesktop
+```
+
+From another terminal:
+
+```powershell
+./scripts/windows-runtime.ps1 -Action task -Project jarvis-ai -Text "Check my PC performance, open jarvis-ai in VS Code, and tell me the current Git branch."
+```
+
+Project selection is a trusted client field. Omitting it for project goals, or using an unknown alias, returns `clarification_required` with configured choices before dispatch. Tools are filtered by task goals, Runtime capabilities and local grants. A missing/disabled capability, non-repository directory, early model exit or unverified editor launch produces a partial/failed outcome. The displayed facts come from validated observations, never the model's final prose. Window titles alone cannot fulfill the editor goal.
+
+For a read-only single-goal task:
+
+```powershell
+$env:PYTHONPATH = Join-Path (Get-Location) 'src'
+python -m jarvis.runtime.client task "Measure CPU and RAM." --expect system_metrics
+```
+
+The text client displays model/tool progress; `--json` returns the complete task result. Ctrl+C requests cancellation. `/v1/tasks`, `/v1/tasks/{id}` and `/v1/tasks/{id}/cancel` share the broker's authenticated local-user boundary. Task executions and native UI calls are serialized. Task state is in memory, capped at 100 records; restart recovery, durable task checkpoints and approvals remain Phase 4. A cancelled or disconnected launch may already have committed an effect.
+
+Run the explicit live development corpus (opens the configured project), and the verifier's Node standard-library test:
+
+```powershell
+python scripts/phase3_validate.py
+node --test tests/vscode_verifier.test.cjs
+```
+
+Native request/receipt files reside under private LocalAppData `JarvisAI/workspace-requests`; expired requests cannot execute. Their retention belongs to Phase 4. The verifier is a same-user observation adapter, not a hardened boundary against compromised same-user software.

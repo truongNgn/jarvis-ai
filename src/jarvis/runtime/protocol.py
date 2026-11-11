@@ -168,8 +168,11 @@ def validate_result(value, call):
     elif name == "project.open":
         validate(data, obj({"project_id": {"type": "string", "enum": [call["args"]["project_id"]]},
             "launch_requested": {"type": "boolean", "enum": [True]},
-            "matching_window_count": {"type": "integer", "minimum": 0}}))
-        if value["verification"] != "unverified":
+            "matching_window_count": {"type": "integer", "minimum": 0},
+            "workspace_evidence": obj({"method": {"type": "string", "enum": ["vscode_workspace_api"]},
+                "request_id": {"type": "string", "minLength": 32, "maxLength": 32}, "verified_at": {"type": "number"}})},
+            ["project_id", "launch_requested", "matching_window_count"]))
+        if value["verification"] == "verified" and "workspace_evidence" not in data:
             raise Rejected("launch_receipt_is_not_workspace_verification")
     elif name == "window.list":
         validate(data, obj({"windows": {"type": "array", "maxItems": 32, "items": obj({
